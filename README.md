@@ -6,7 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'iconsole'
+    gem 'iconsole', git: 'git@github.com:dtthaison/iconsole.git'
 
 And then execute:
 
@@ -18,8 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
-    Then run the iconsole generator to add inti file and mount routes:
-        $ rails generate iconsole
+Run the iconsole generator to add inti file and mount routes:
+
+    $ rails generate iconsole
+
+Then change config `username` and `password` at `config/initializers/iconsole.rb`
+
+Default access url: `/iconsole`
+
 
 TODO: Write usage instructions here
 
