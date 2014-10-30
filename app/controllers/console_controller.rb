@@ -5,7 +5,7 @@ class ConsoleController < ActionController::Base
   layout false
 
   def index
-    render layout: false
+    render 'iconsole/console', layout: false
   end
 
   def subscribe(event_name)
@@ -22,7 +22,7 @@ class ConsoleController < ActionController::Base
       $stdout = tmp_out
 
       object = eval(params[:command])
-      ap = AwesomePrint::Inspector.new(html: true)
+      ap = ::AwesomePrint::Inspector.new(html: true)
       response = ap.awesome(object)
 
       # restore default stdout

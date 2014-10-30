@@ -1,5 +1,6 @@
 require 'iconsole/version'
 require 'iconsole/configuration'
+require 'awesome_print'
 
 module Iconsole
   class Engine < ::Rails::Engine

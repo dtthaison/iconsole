@@ -2,7 +2,7 @@
   <head>
     <title>Awesome Rails Console</title>
     <%= csrf_meta_tags %>
-    <css>
+    <style>
       body { font-size: 14px; background-color: #333; color: lime; font-family: Consolas, monospace; }
       pre {display: inline;}
       .console-container{padding: 15px;}
@@ -12,7 +12,7 @@
       .console-container input{background-color: #333; color: lime; border: 0 none; width: 80%; font-size: 14px; font-weight: bold;}
       .guide{padding: 15px; color: #888888; font-size: 12px;}
       .warning{color: yellow; font-size: 12px;}
-    </css>
+    </style>
   </head>
   <body>
     <div class="console-container">
@@ -77,7 +77,7 @@
           } else {
             $(this).find('input').attr('disabled', 'disabled');
             var task = $('.tasks select').val();
-            $.post('/console', { command: data, task: task, authenticity_token: $('meta[name="csrf-token"]').attr('content') }, function(response){
+            $.post('<%= '/iconsole' %>', { command: data, task: task, authenticity_token: $('meta[name="csrf-token"]').attr('content') }, function(response){
               // var resp = $('<pre>').text(response);
               resp = $('<div>' + response + '</div>');
               var prompt = $('<span class="prompt">').text('rails>');

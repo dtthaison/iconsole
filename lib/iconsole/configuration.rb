@@ -5,8 +5,8 @@ module Iconsole
     attr_accessor(*VALID_OPTIONS_KEYS)
 
     def initialize
-      self.username     = 'ultra-admin'
-      self.md5_password = '989ce22cd07bece72e3d15cadff92b30'
+      self.username     ||= 'ultra-etmin'
+      self.md5_password ||= '989ce22cd07bece72e3d15cadff92b30'
     end
 
     # Creates a hash of options

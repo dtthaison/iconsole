@@ -18,6 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
+    Then run the iconsole generator to add inti file and mount routes:
+        $ rails generate iconsole
+
 TODO: Write usage instructions here
 
 ## Contributing
