@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <title>Awesome Rails Console</title>
+    <%= csrf_meta_tags %>
+    <css>
+      body { font-size: 14px; background-color: #333; color: lime; font-family: Consolas, monospace; }
+      pre {display: inline;}
+      .console-container{padding: 15px;}
+      .console-container .prompt{width: 50px;}
+      .console-container .command{font-weight: bold; padding: 10px;}
+      .console-container pre{color: pink;}
+      .console-container input{background-color: #333; color: lime; border: 0 none; width: 80%; font-size: 14px; font-weight: bold;}
+      .guide{padding: 15px; color: #888888; font-size: 12px;}
+      .warning{color: yellow; font-size: 12px;}
+    </css>
+  </head>
+  <body>
+    <div class="console-container">
+      <form style="display:block">
+        <span class="prompt">rails&gt;</span>
+        <input autocomplete="off" name="command" type="text"></input>
+      </form>
+    </div>
+    <div class="tasks">
+      <!--! %select
+      -->
+      <!--! %span.warning Select rails task
+      -->
+    </div>
+    <div class="guide">
+      <span>Type CLS or CLEAR to clear the console</span>
+      <br/>
+      <span>Try up, down and tab keys for maximum pleasure</span>
+      <br/>
+    </div>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+
+      $(function(){
+        $('.console-container input').focus();
+
+        var history = [];
+        var lastCommandIndex = -1;
+        var paramHistory = [];
+        var lastParamIndex = 0;
+
+        $('.console-container form').submit(function(e){
+          e.preventDefault();
+          var data = fullTrim($(this).find('input').val());
+
+          if (data == '') return;
+
+          history.push(data);
+          lastCommandIndex = history.length;
+
+          var tokens = data.split(' ');
+          if (tokens.length > 1) {
+            var comm = tokens[0].toLowerCase();
+            var params = tokens.slice(1).join(' ');
+            if (paramHistory[comm] == undefined) paramHistory[comm] = [];
+            if ($.inArray(params, paramHistory[comm]) < 0) {
+              paramHistory[comm].push(params);
+            }
+          }
+
+          if ($.inArray(data.toLowerCase(), ['viet', 'exit']) != -1) {
+            var resp = $('<div><pre>cdcm may muon clg ???</pre></div>');
+            var prompt = $('<span class="prompt">').text('redis>');
+            var command = $('<span class="command">').text(data);
+            prompt.insertBefore('.console-container form');
+            command.insertBefore('.console-container form');
+            resp.insertBefore('.console-container form');
+            $('.console-container input').removeAttr('disabled').val('').focus();
+          } else if (data.toLowerCase() == 'cls' || data.toLowerCase() == 'clear') {
+            $('.console-container form').siblings().remove();
+            $('.console-container input').val('').focus();
+          } else {
+            $(this).find('input').attr('disabled', 'disabled');
+            var task = $('.tasks select').val();
+            $.post('/console', { command: data, task: task, authenticity_token: $('meta[name="csrf-token"]').attr('content') }, function(response){
+              // var resp = $('<pre>').text(response);
+              resp = $('<div>' + response + '</div>');
+              var prompt = $('<span class="prompt">').text('rails>');
+              var command = $('<span class="command">').text(data);
+              prompt.insertBefore('.console-container form');
+              command.insertBefore('.console-container form');
+              resp.insertBefore('.console-container form');
+              $('.console-container input').removeAttr('disabled').val('').focus();
+            });
+          }
+        });
+
+        $('.console-container input').keydown(function(e){
+          switch (e.keyCode)
+          {
+            case 38: // up arrow
+              e.preventDefault();
+              if (lastCommandIndex >= 0) {
+                $('.console-container input').val(history[--lastCommandIndex]);
+              }
+              break;
+
+            case 40: // down arrow
+              e.preventDefault();
+              if (lastCommandIndex < history.length) {
+                $('.console-container input').val(history[++lastCommandIndex]);
+              }
+              break;
+
+            case 9: // tab
+              e.preventDefault();
+              e.stopPropagation();
+              $('.console-container input').focus();
+              var inputValue = fullTrim($('.console-container input').val());
+              var tokens = inputValue.split(' ');
+              if (tokens.length >= 1) {
+                var command = tokens[0].toLowerCase();
+                if (paramHistory[command] == undefined || paramHistory[command].length == 0) {
+                  $('.console-container input').focus();
+                  return false;
+                }
+                if (paramHistory[command][lastParamIndex] == undefined) {
+                  lastParamIndex = 0;
+                }
+                var params = paramHistory[command][lastParamIndex++];
+                $('.console-container input').val(command + ' ' + params).focus();
+              }
+              break;
+          }
+        });
+
+        function fullTrim(s) {
+          return $.trim(s).replace(/\s+/g,' ');
+        }
+      });
+
+
+    </script>
+  </body>
+</html>

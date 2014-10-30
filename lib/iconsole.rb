@@ -1,5 +1,23 @@
-require "iconsole/version"
+require 'iconsole/version'
+require 'iconsole/configuration'
 
 module Iconsole
-  # Your code goes here...
+  class Engine < ::Rails::Engine
+  end
+
+  class << self
+    attr_writer :configuration
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.reset
+    @configuration = Configuration.new
+  end
+
+  def self.configure
+    yield(configuration)
+  end
 end
