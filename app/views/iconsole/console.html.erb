@@ -63,14 +63,7 @@
             }
           }
 
-          if ($.inArray(data.toLowerCase(), ['viet', 'exit']) != -1) {
-            var resp = $('<div><pre>cdcm may muon clg ???</pre></div>');
-            var prompt = $('<span class="prompt">').text('redis>');
-            var command = $('<span class="command">').text(data);
-            prompt.insertBefore('.console-container form');
-            command.insertBefore('.console-container form');
-            resp.insertBefore('.console-container form');
-            $('.console-container input').removeAttr('disabled').val('').focus();
+          if ($.inArray(data.toLowerCase(), ['exit']) != -1) {
           } else if (data.toLowerCase() == 'cls' || data.toLowerCase() == 'clear') {
             $('.console-container form').siblings().remove();
             $('.console-container input').val('').focus();
