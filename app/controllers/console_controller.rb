@@ -1,7 +1,7 @@
 require 'stringio'
 
 class ConsoleController < ActionController::Base
-  before_filter :authenticate
+  before_action :authenticate
   layout false
 
   def index
