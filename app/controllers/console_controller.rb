@@ -39,7 +39,7 @@ class ConsoleController < ActionController::Base
     response = @sql.join("\n") + '<br/>' + response unless @sql.empty?
     response = '<pre>' + response + '</pre>'
 
-    render text: response
+    render plain: response
   end
 
   protected
