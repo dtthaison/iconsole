@@ -70,7 +70,7 @@
           } else {
             $(this).find('input').attr('disabled', 'disabled');
             var task = $('.tasks select').val();
-            $.post('<%= '/iconsole' %>', { command: data, task: task, authenticity_token: $('meta[name="csrf-token"]').attr('content') }, function(response){
+            $.post('<%= Iconsole::Engine.routes.url_helpers.post_iconsole_path %>', { command: data, task: task, authenticity_token: $('meta[name="csrf-token"]').attr('content') }, function(response){
               // var resp = $('<pre>').text(response);
               resp = $('<div>' + response + '</div>');
               var prompt = $('<span class="prompt">').text('rails>');
