@@ -1,12 +1,12 @@
 # Iconsole
 
-TODO: Write a gem description
+This gem will help you run command on web as `rails c`
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'iconsole', git: 'git@github.com:dtthaison/iconsole.git'
+    gem 'iconsole', git: 'https://github.com/chipchipzero/iconsole.git'
 
 And then execute:
 
